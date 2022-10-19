@@ -1,0 +1,22 @@
+[
+  [
+    {
+      "id": 1,
+      "title": "Papitas",
+      "price": 100,
+      "thumbnail": "https://www.comedera.com/wp-content/uploads/2022/04/Papas-rusticas-shutterstock_2022241940.jpg"
+    },
+    {
+      "id": 2,
+      "title": "zanahoria",
+      "price": 300,
+      "thumbnail": "https://www.comedera.com/wp-content/uploads/2022/04/Papas-rusticas-shutterstock_2022241940.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Tomates",
+      "price": 200,
+      "thumbnail": "https://www.comedera.com/wp-content/uploads/2022/04/Papas-rusticas-shutterstock_2022241940.jpg"
+    }
+  ]
+]
