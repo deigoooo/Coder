@@ -6,7 +6,7 @@ const app = express();
 const PORT = 8080;
 
 app.get("/", (req, res) => {
-  res.send("Bienvenidos a mi server");
+  res.send(`<div style="border:black 1px solid; color:red;"> <h1 style="text-align: center">SOY DIEGO RAMIREZ Y ESTE ES MI BACK</h1> </div>`);
 });
 
 app.get("/productos", (req, res) => {    
@@ -19,7 +19,7 @@ app.get("/productos", (req, res) => {
                                   <td style="border:black 1px solid;"><h3>ID: ${item.id}</h3></td> 
                                   <td style="border:black 1px solid;"><h3 style= "width:200px;">Nombre: ${item.title}</h3></td> 
                                   <td style="border:black 1px solid;"><h3>Precio: ${item.price}</h3></td> 
-                                  <td style="border:black 1px solid;"><h3>Thumbnail: ${item.thumbnail}</h3></td>
+                                  <td style="border:black 1px solid;"><img style="padding:10px" height="80px" width="100px" src="${item.thumbnail}"></td>
                                 </tr>
                                 </table>`)
         );
