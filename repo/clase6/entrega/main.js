@@ -9,22 +9,42 @@ app.get("/", (req, res) => {
   res.send("Bienvenidos a mi server");
 });
 
-app.get("/productos", (req, res) => {
-    
+app.get("/productos", (req, res) => {    
     todos = async () => {
         const arrayCompleto = await procesos.getAll();
         let formato= ``;
         arrayCompleto.map(
-            item=>(formato += `<table style="border:black 1px solid; "><tr><td style="border:black 1px solid;"><h3>ID: ${item.id}</h3></td> <td style="border:black 1px solid;"><h3 style= "width:200px;">Nombre: ${item.title}</h3></td> <td style="border:black 1px solid;"><h3>Precio: ${item.price}</h3></td> <td style="border:black 1px solid;"><h3>Thumbnail: ${item.thumbnail}</h3></td></tr></table>`)
+            item=>(formato +=   `<table style="border:black 1px solid;">
+                                <tr>
+                                  <td style="border:black 1px solid;"><h3>ID: ${item.id}</h3></td> 
+                                  <td style="border:black 1px solid;"><h3 style= "width:200px;">Nombre: ${item.title}</h3></td> 
+                                  <td style="border:black 1px solid;"><h3>Precio: ${item.price}</h3></td> 
+                                  <td style="border:black 1px solid;"><h3>Thumbnail: ${item.thumbnail}</h3></td>
+                                </tr>
+                                </table>`)
         );
         res.send(`<h1>la lista de productos es la siguiente:</h1> ${formato}`);
-
     };
   todos();  
 });
 
 app.get("/productoRandom", (req, res) => {
-  res.send("Bienvenidos a mi producto random");
+  random = async () => {
+    const arrayCompleto = await procesos.getAll();
+    let cualqueira=Math.floor(Math.random()*arrayCompleto.length);
+    const producto= await procesos.getById(cualqueira + 1);
+    let formato=  `<div style="border:black 1px solid; color: red; text-align: center; height: auto; width: 500px">
+                  <h2>Nombre: ${producto[0].title}</h2> 
+                  <h3>Precio: ${producto[0].price}</h3> 
+                  <img style="margin: 10px"height="250px" src="${producto[0].thumbnail}">
+                  </div>`;
+    
+    res.send(`
+              <h1>Su producto random es la siguiente:</h1>
+              ${formato}
+    `);
+  }
+  random();
 });
 
 const connectionServer = app.listen(PORT, () => {

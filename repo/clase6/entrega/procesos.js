@@ -20,5 +20,24 @@ class Procesos{
             console.log(error)            
         }
     }
+    getById=async(id)=>{
+        try {
+            if(fs.existsSync(this.archivo)){
+                let productos= await this.getAll();
+                let productById = productos.filter(item=>item.id==id);
+                if(productById.length === 0){
+                    throw new Error('No se encontro el Id');
+                }else{
+                    return productById
+                }
+            }else{
+                return "No se encontro el archivo"
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 }
 module.exports = Procesos

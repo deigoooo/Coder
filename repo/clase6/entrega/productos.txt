@@ -9,13 +9,13 @@
     "id": 2,
     "title": "zanahoria",
     "price": 300,
-    "thumbnail": "https://www.comedera.com/wp-content/uploads/2022/04/Papas-rusticas-shutterstock_2022241940.jpg"
+    "thumbnail": "https://treebu.co/wp-content/uploads/2020/10/zanahoria.jpg"
   },
   {
     "id": 3,
     "title": "Tomates",
     "price": 200,
-    "thumbnail": "https://www.comedera.com/wp-content/uploads/2022/04/Papas-rusticas-shutterstock_2022241940.jpg"
+    "thumbnail": "https://www.quironsalud.es/idcsalud-client/cm/images?locale=es_ES&idMmedia=2299323"
   },
   {
     "id": 4,
@@ -27,12 +27,12 @@
     "id": 5,
     "title": "zanahoria",
     "price": 300,
-    "thumbnail": "https://www.comedera.com/wp-content/uploads/2022/04/Papas-rusticas-shutterstock_2022241940.jpg"
+    "thumbnail": "https://treebu.co/wp-content/uploads/2020/10/zanahoria.jpg"
   },
   {
     "id": 6,
     "title": "Tomates",
     "price": 200,
-    "thumbnail": "https://www.comedera.com/wp-content/uploads/2022/04/Papas-rusticas-shutterstock_2022241940.jpg"
+    "thumbnail": "https://www.quironsalud.es/idcsalud-client/cm/images?locale=es_ES&idMmedia=2299323"
   }
 ]
