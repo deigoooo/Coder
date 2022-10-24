@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/productos", (req, res) => {    
-    todos = async () => {
+    const todos = async () => {
         const arrayCompleto = await procesos.getAll();
         let formato= ``;
         arrayCompleto.map(
@@ -29,7 +29,7 @@ app.get("/productos", (req, res) => {
 });
 
 app.get("/productoRandom", (req, res) => {
-  random = async () => {
+  const random = async () => {
     const arrayCompleto = await procesos.getAll();
     let cualqueira=Math.floor(Math.random()*arrayCompleto.length);
     const producto= await procesos.getById(cualqueira + 1);

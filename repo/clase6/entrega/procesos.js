@@ -5,7 +5,7 @@ class Procesos{
         this.archivo = archivo;
     }
 
-    getAll=async()=>{
+    async getAll(){
         try {
             if(fs.existsSync(this.archivo)){
                 console.log('Leyendo archivo');
@@ -20,7 +20,7 @@ class Procesos{
             console.log(error)            
         }
     }
-    getById=async(id)=>{
+    async getById(id){
         try {
             if(fs.existsSync(this.archivo)){
                 let productos= await this.getAll();
