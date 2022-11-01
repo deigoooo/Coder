@@ -4,6 +4,7 @@ class Metodos{
     }
 
     save(objeto){
+
         let id = 1;
         this.productos.forEach((element, index) => {
             if (element.id >= id) {
@@ -40,6 +41,15 @@ class Metodos{
     deleteAll() {
         this.productos = [];
     }
+    update(producto){
+        this.productos = this.productos.map((element) => {
+            if(element.id == producto.id){
+                return producto;
+            }
+            return element;
+        });
+
+    } 
 }
 
 

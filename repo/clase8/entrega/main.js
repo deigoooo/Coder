@@ -49,17 +49,32 @@ rutaProductos.get('/', (peticion, respuesta) => {
 rutaProductos.post('/', (peticion, respuesta) => {
     const producto = peticion.body;
     contenedor.save(producto);
-    respuesta.send('ok');
+    respuesta.json({
+        status: 'Su producto ah sido agregado'
+    })        
 });
   
 rutaProductos.put('/:id', (peticion, respuesta) => {
-    const id = parseInt(peticion.params.id)
-    const productoModificar= contenedor.getById(id);
-    console.log(productoModificar)
+    const id = peticion.params.id
+    const productoNuevo= peticion.body
+    contenedor.update({id, ...productoNuevo});
+    respuesta.json({
+        status: 'Su producto ah sido modificado'
+    })
 });
   
 rutaProductos.delete('/:id', (peticion, respuesta) => {
-
+    const id = peticion.params.id
+    let idSeleccionado=contenedor.getById(id)
+    if (idSeleccionado){
+        contenedor.deleteById(id);
+        respuesta.json({
+            status: 'Su producto ah sido eliminado'
+        })
+    }else{
+        respuesta.status(404);
+        respuesta.json({ error : 'producto no encontrado' });
+    }
 });
   
 app.use('/api/productos', rutaProductos);
