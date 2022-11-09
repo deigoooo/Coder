@@ -1,6 +1,8 @@
 const express = require('express');
 //const { Router } = express;
 const app = express();
+const handlebars = require('express-handlebars');
+
 const Metodos = require("./metodos.js")
 
 let contenedor= new Metodos([])
@@ -12,22 +14,16 @@ const PORT = 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended:true }));
 
-app.set('view engine', 'ejs');
+app.engine('hbs', handlebars.engine({
+    extname: '.hbs',
+    defaultLayout: 'index.hbs',
+    layoutsDir: __dirname + '/views'
+}));
+
+app.set ('views', './views');
+app.set ('view engine', 'hbs');
 
 app.use('/static', express.static(__dirname + '/public'));
-
-//Datos de prueba
-contenedor.save({
-    title: 'PC',
-    price: '4000',
-    thumbnail: 'image1'
-});
-  
-contenedor.save({
-    title: 'Teclado',
-    price: '400',
-    thumbnail: 'image2'
-});
 
 //Endpoints
   
