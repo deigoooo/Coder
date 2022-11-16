@@ -21,11 +21,7 @@ aplicacion.use(express.static(publicRoot));
 //****************
 
 const productos = new Contenedor("./src/db/productos.txt");
-const messages = [
-  { email: "juan@gmail.com", text: "¡Hola! ¿Que tal?", time: moment(new Date()).format('DD/MM/YYYY hh:mm:ss') },
-  { email: "pedro@gmail.com", text: "¡Muy bien! ¿Y vos?", time: moment(new Date()).format('DD/MM/YYYY hh:mm:ss') },
-  { email: "ana@gmail.com", text: "¡Genial!", time: moment(new Date()).format('DD/MM/YYYY hh:mm:ss') }
-];
+const messages = new Contenedor("./src/db/mensajes.txt");
 
 //Endpoints***
 aplicacion.get("/", (peticion, respuesta) => {
@@ -52,12 +48,14 @@ io.on("connection", async (socket) => {
     io.sockets.emit("producto", data);
   });
   //Para enviar todos los mensajes en la primera conexion
-  socket.emit("messages", messages);
+  const listaMensajes = await messages.getAll();
+  socket.emit("messages", listaMensajes);
 
   //Evento para recibir nuevos mensajes
-  socket.on("new-message", (data) => {
+  socket.on("new-message", async (data) => {
     data.time= moment(new Date()).format('DD/MM/YYYY hh:mm:ss');
-    messages.push(data);
-    io.sockets.emit("messages", messages);
+    await messages.save(data);
+    const listaMensajes = await messages.getAll();
+    io.sockets.emit("messages", listaMensajes);
   });
 });
