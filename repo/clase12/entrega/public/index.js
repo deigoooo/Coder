@@ -48,9 +48,9 @@ function addProduct(e){
 
 function render(data) {
     const html = data.map((elem, index) => {
-        return(`<div style="color: brown">
-            <strong style="color: blue">${elem.email}</strong> [${elem.time}]:
-            <em style="color: green">${elem.text}</em> 
+        return(`<div class="container text-start pb-1" style="color: brown" >
+            <strong class="text-primary">${elem.email}</strong> [${elem.time}]:
+            <em class="text-success">${elem.text}</em> 
             </div>`)
     }).join(" ");
     document.getElementById('messages').innerHTML = html;

@@ -1,4 +1,3 @@
-//Servidor************
 const express = require('express');
 const moment = require('moment');
 const aplicacion = express();
@@ -16,25 +15,23 @@ const io = new IOServer(httpServer);
 aplicacion.use(express.json());
 aplicacion.use(express.urlencoded({ extended: true }));
 
-//***** Hacemos la carpeta public visible
+//Hacemos la carpeta public visible
 aplicacion.use(express.static(publicRoot));
-//****************
 
 const productos = new Contenedor("./src/db/productos.txt");
 const messages = new Contenedor("./src/db/mensajes.txt");
 
-//Endpoints***
+//Endpoint
 aplicacion.get("/", (peticion, respuesta) => {
   respuesta.send("index.html", { root: publicRoot });
 });
 
-//Servidor************
+//Servidor
 const servidor = httpServer.listen(port, () => {
   console.log(`Servidor escuchando: ${servidor.address().port}`);
 });
 
 servidor.on("error", (error) => console.log(`Error: ${error}`));
-//****************
 
 //sockets
 io.on("connection", async (socket) => {
