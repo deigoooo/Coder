@@ -1,6 +1,6 @@
-const express = require('express');
-const { Server: HttpServer } = require('http');
-const { Server: IOServer } = require('socket.io');
+import express from 'express';
+//const { Server: HttpServer } = require('http');
+//const { Server: IOServer } = require('socket.io');
 
 //importamos las rutas
 import { rutaProducto } from './routes/productos.js';
@@ -12,29 +12,30 @@ const app = express();
 const port = process.env.PORT || 8080;
 const publicRoot = './public';
 
-//implementamos las rutas
-app.use('/api/producto', rutaProducto);
-app.use('/api/carrito', rutaCarrito);
+//carpeta publica visible
+app.use(express.static(publicRoot));
 
 //uso de json
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//middleware
+//manejo acceso
 app.use((peticion, respuesta, next) => {
     const key = peticion.headers.key;
-    if(key == 1234){
-      next();//Autorizar ejecutar lo siguiente
-    }
+    if(key == 1234){        
+      next();//Autoriza ejecutar lo siguiente
+    }else {
     respuesta.status(403).send('Acceso denegado!');
+    };
   });
 
-//inicializacion sockets
-const httpServer = new HttpServer(app);
-const io = new IOServer(httpServer);
+//implementamos las rutas
+app.use('/api/producto', rutaProducto);
+app.use('/api/carrito', rutaCarrito);
 
-//carpeta publica visible
-aplicacion.use(express.static(publicRoot));
+//inicializacion sockets
+//const httpServer = new HttpServer(app);
+//const io = new IOServer(httpServer);
 
 //inicializo el server
 const servidor = app.listen(port, () => {
