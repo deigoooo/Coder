@@ -12,8 +12,14 @@ rutaCarrito.get('/', async (peticion, respuesta) => {
   respuesta.json(listaCarritos);
 });
 
-rutaCarrito.delete('/:id', (peticion, respuesta) => {
-  
+rutaCarrito.delete('/:id', async (peticion, respuesta) => {
+  const id = peticion.params.id;
+  const listaCarritos = await carritos.getAll;
+  const listaEliminado = await carritos.deleteById(id);
+  respuesta.json(listaEliminado);
+
+
+
 });
 
 rutaCarrito.get('/:id/productos', (peticion, respuesta) => {

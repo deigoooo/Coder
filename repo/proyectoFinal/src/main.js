@@ -19,18 +19,8 @@ app.use(express.static(publicRoot));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//manejo acceso
-app.use((peticion, respuesta, next) => {
-    const key = peticion.headers.key;
-    if(key == 1234){        
-      next();//Autoriza ejecutar lo siguiente
-    }else {
-    respuesta.status(403).send('Acceso denegado!');
-    };
-  });
-
 //implementamos las rutas
-app.use('/api/producto', rutaProducto);
+app.use('/api/productos', rutaProducto);
 app.use('/api/carrito', rutaCarrito);
 
 //inicializacion sockets
