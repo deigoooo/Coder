@@ -27,6 +27,15 @@ app.use('/api/carrito', rutaCarrito);
 //const httpServer = new HttpServer(app);
 //const io = new IOServer(httpServer);
 
+//middleware en rutas no implementadas
+app.use((peticion, respuesta, next) => {
+  if (!peticion.route) {
+    respuesta.status(404).send({error : -2, descripcion: `path ${peticion.url} no autorizada`});
+  } else {
+    next();
+  }
+})
+
 //inicializo el server
 const servidor = app.listen(port, () => {
     console.log(`Servidor escuchando: ${servidor.address().port}`);

@@ -22,7 +22,7 @@ rutaProducto.get('/', async (peticion, respuesta) => {
 });
 
 rutaProducto.get('/:id', async(peticion, respuesta) => {
-  const id = peticion.params.id;
+  const id = parseInt(peticion.params.id);
   const productoId = await productos.getById(id);
   respuesta.json(productoId);
 });
@@ -34,7 +34,7 @@ rutaProducto.post('/', privilegio, (peticion, respuesta) => {
 });
 
 rutaProducto.put('/:id', privilegio, (peticion, respuesta) => {
-  const id = peticion.params.id;
+  const id = parseInt(peticion.params.id);
   const nuevoProducto = peticion.body;
 
   productos.update(id, nuevoProducto);
@@ -42,7 +42,11 @@ rutaProducto.put('/:id', privilegio, (peticion, respuesta) => {
 });
 
 rutaProducto.delete('/:id', privilegio, (peticion, respuesta) => {
-  
+  const id = parseInt(peticion.params.id);
+  productos.deleteById(id);
+  respuesta.status(200).json({
+    status: 'Producto Eliminado'
+  })
 });
 
 export { rutaProducto };

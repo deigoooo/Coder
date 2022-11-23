@@ -54,11 +54,6 @@ export class Contenedor {
     
   }
 
-  async deleteAll() {
-    const arregloVacio = [];
-    await fs.promises.writeFile(this.nombre, JSON.stringify(arregloVacio, null, 2));
-  }
-
   async update(id, objeto) {
     const archivo = await fs.promises.readFile(this.nombre, 'utf-8');
     const archivoParseado = JSON.parse(archivo);
@@ -76,4 +71,8 @@ export class Contenedor {
     }
   }
 
+  async deleteAll() {
+    const arregloVacio = [];
+    await fs.promises.writeFile(this.nombre, JSON.stringify(arregloVacio, null, 2));
+  }
 }

@@ -4,34 +4,66 @@ import { Contenedor } from '../contenedor/contenedorFs.js';
 const rutaCarrito = express.Router();
 
 const carritos = new Contenedor('src/db/carritos.txt');
+const productos = new Contenedor('src/db/productos.txt');
 
 //Endpoints***
-
 rutaCarrito.get('/', async (peticion, respuesta) => {
   const listaCarritos = await carritos.getAll();
   respuesta.json(listaCarritos);
 });
 
+rutaCarrito.get('/:id/productos', async (peticion, respuesta) => {
+  const id = parseInt(peticion.params.id);
+  const listaProductos = await carritos.getById(id);
+  respuesta.json(listaProductos.productos);
+});
+
+rutaCarrito.post('/', async (peticion, respuesta) => {
+  const carrito = {
+    timestamp: Date.now(),
+    productos: []
+  }
+  const id = await carritos.save(carrito);
+  respuesta.json(id);
+});
+
+rutaCarrito.post('/:id/productos', async (peticion, respuesta) => {
+  const idCarrito = parseInt(peticion.params.id);
+  const idProducto = peticion.body.idProducto;
+  const carrito = await carritos.getById(idCarrito);
+  const producto = await productos.getById(idProducto);
+  carrito.productos.push(producto);
+  await carritos.update(idCarrito, carrito);
+  respuesta.json({
+    status: 'ok'
+  });
+});
+
+rutaCarrito.delete('/:id/productos/:id_prod', async (peticion, respuesta) => {
+  const idCarrito = parseInt(peticion.params.id);
+  const idProducto = parseInt(peticion.params.id_prod);
+  const carrito = await carritos.getById(idCarrito);
+  let indexToDelete = -1;
+  carrito.productos.forEach((producto,index) => {
+    if (producto.id == idProducto) {
+      indexToDelete = index;
+    };
+  });
+  if (indexToDelete => 0) {
+    carrito.productos.splice(indexToDelete, 1);
+  }
+  await carritos.update(idCarrito, carrito);
+  respuesta.json({
+    status: 'ok'
+  });
+});
+
 rutaCarrito.delete('/:id', async (peticion, respuesta) => {
-  const id = peticion.params.id;
-  const listaCarritos = await carritos.getAll;
-  const listaEliminado = await carritos.deleteById(id);
-  respuesta.json(listaEliminado);
-
-
-
-});
-
-rutaCarrito.get('/:id/productos', (peticion, respuesta) => {
-  
-});
-
-rutaCarrito.post('/:id/productos', (peticion, respuesta) => {
-  
-});
-
-rutaCarrito.delete('/:id/productos/:id_prod', (peticion, respuesta) => {
-  
+  const id = parseInt(peticion.params.id);
+  await carritos.deleteById(id);
+  respuesta.json({
+    status: 'carrito eliminado'
+  });
 });
 
 
