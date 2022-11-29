@@ -1,15 +1,16 @@
-import options from './src/connection/options';
-import knex from "knex";
+const options = require('./connection/options');
+const knex = require('knex');
 
-const connection = knex(options);
+const connection = knex(options.mysql);
+const connection2 = knex(options.sqlite3);
 
 ( async () => {
     try {
-        const mensajes = await connection.schema.hasTable('mensajes');
+        const mensajes = await connection2.schema.hasTable('mensajes');
         const productos = await connection.schema.hasTable('productos');
-        
+
         if (!mensajes) {
-            await connection.schema.createTable('mensajes', (table) => {
+            await connection2.schema.createTable('mensajes', (table) => {
                 table.increments('id').primary;
                 table.string('email', 45).notNullable();
                 table.string('text', 160).notNullable();
