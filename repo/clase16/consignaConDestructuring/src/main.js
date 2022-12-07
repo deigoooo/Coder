@@ -23,6 +23,8 @@ aplicacion.use(express.json());
 aplicacion.use(express.urlencoded({ extended: true }));
 
 //socket IO  Server Http
+//const httpServer = new HttpServer(aplicacion);
+//const io = new IOServer(httpServer);
 const httpServer = http.createServer(aplicacion);
 const io = new Server(httpServer);
 
