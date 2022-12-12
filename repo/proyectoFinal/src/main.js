@@ -1,6 +1,4 @@
 import express from 'express';
-//const { Server: HttpServer } = require('http');
-//const { Server: IOServer } = require('socket.io');
 
 //importamos las rutas
 import { rutaProducto } from './routes/productos.js';

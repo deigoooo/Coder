@@ -1,12 +1,15 @@
 //Ruta de Productos************
 import express from 'express';
-import { Contenedor } from '../contenedor/contenedorFs.js';
+//import { Contenedor } from '../contenedor/contenedorFs.js';
+import ContenedorCarritos from '../dao/carritos/carritosDaoFs.js'
+import ContenedorProductos from '../dao/productos/productosDaoFs.js';
+
 const rutaCarrito = express.Router();
 
-const carritos = new Contenedor('src/db/carritos.txt');
-const productos = new Contenedor('src/db/productos.txt');
+const carritos = new ContenedorCarritos();
+const productos = new ContenedorProductos();
 
-//Endpoints***
+//Endpoints
 rutaCarrito.get('/', async (peticion, respuesta) => {
   const listaCarritos = await carritos.getAll();
   respuesta.json(listaCarritos);
