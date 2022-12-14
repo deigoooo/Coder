@@ -27,11 +27,11 @@ app.use('/api/carrito', rutaCarrito);
 
 //middleware en rutas no implementadas
 app.use((peticion, respuesta, next) => {
-  if (!peticion.route) {
-    respuesta.status(404).send({error : -2, descripcion: `path ${peticion.url} no autorizada`});
-  } else {
-    next();
-  }
+    if (!peticion.route) {
+      respuesta.status(404).send({error : -2, descripcion: `path ${peticion.url} no autorizada`});
+    } else { 
+      next();
+    } 
 })
 
 //inicializo el server
