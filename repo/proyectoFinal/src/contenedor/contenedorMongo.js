@@ -31,8 +31,8 @@ export class Contenedor {
   }
 
   async update(producto) {
-
-    await this.collection.updateOne({'_id': producto.id}, { $set: { ...producto } });
+    //console.log(producto._id);
+    await this.coleccion.updateOne({'_id': producto._id}, { $set: { ...producto } });
 
   }
 
@@ -60,14 +60,3 @@ export class Contenedor {
   
   }
 }
-
-
-/* (async () => {
-    try {
-      await mongoose.connect('mongodb+srv://root:d1i9e8g8o@prueba.26ov04v.mongodb.net/ecommerce?retryWrites=true&w=majority', {})
-      const carritos = await carritosModel.find({});
-      console.log(carritos);
-    } catch (error) {
-      console.log(error);
-    }
-  })(); */

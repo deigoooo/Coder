@@ -3,12 +3,7 @@ import express from 'express';
 
 const rutaCarrito = express.Router();
 
-//import ContenedorCarritos from '../dao/carritos/carritosDaoMongo.js'
-//import ContenedorProductos from '../dao/productos/productosDaoMongo.js';
 import { productos, carritos } from '../dao/index.js';
-
-//const carritos = new ContenedorCarritos();
-//const productos = new ContenedorProductos();
 
 //Endpoints
 rutaCarrito.get('/', async (peticion, respuesta) => {
@@ -34,10 +29,18 @@ rutaCarrito.post('/', async (peticion, respuesta) => {
 rutaCarrito.post('/:id/productos', async (peticion, respuesta) => {
   const idCarrito = peticion.params.id;
   const idProducto = peticion.body.idProducto;
+
   const carrito = await carritos.getById(idCarrito);
   const producto = await productos.getById(idProducto);
-  carrito.productos.push(producto);
-  await carritos.update(idCarrito, carrito);
+
+  console.log(carrito);
+  console.log(producto);
+  
+  await carrito.productos.push(producto);
+
+  console.log(carrito);
+  
+  await carritos.update(carrito);
   respuesta.json({
     status: 'ok'
   });

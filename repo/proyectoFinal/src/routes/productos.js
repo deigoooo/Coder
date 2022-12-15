@@ -3,11 +3,7 @@ import express from 'express';
 
 const rutaProducto = express.Router();
 
-//import ContenedorProductos from '../dao/productos/productosDaoMongo.js';
-//import { Contenedor } from '../contenedor/contenedorFs.js';
 import { productos } from '../dao/index.js';
-
-//const productos = new ContenedorProductos();
 
 //middleware
 const privilegio = (peticion,respuesta,next) => {
