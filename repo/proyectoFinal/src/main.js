@@ -1,5 +1,7 @@
 import express from 'express';
 
+//console.log(`en el main ${process.env.DB}`);
+
 //importamos las rutas
 import { rutaProducto } from './routes/productos.js';
 import { rutaCarrito } from './routes/carrito.js';

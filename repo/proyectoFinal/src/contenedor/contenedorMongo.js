@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import config from '../config.js';
 
+await mongoose.set('strictQuery', true);
 await mongoose.connect(config.mongodb.url);
 
 export class Contenedor {
@@ -31,7 +32,7 @@ export class Contenedor {
 
   async update(producto) {
 
-    await this.coleccion.updateOne({'_id': producto._id}, producto);
+    await this.collection.updateOne({'_id': producto.id}, { $set: { ...producto } });
 
   }
 
@@ -49,7 +50,7 @@ export class Contenedor {
 
   async deleteById(id) {
 
-    const doc = await this.coleccion.deleteOne({ '_id': id });
+    await this.coleccion.deleteOne({ '_id': id });
 
   }
 

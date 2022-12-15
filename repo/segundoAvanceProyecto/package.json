@@ -1,21 +1,19 @@
 {
-  "name": "proyectofinal",
+  "name": "consigna",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/main.js DB=mongodb"
+    "start": "DB=mongodb nodemon src/main.js"
   },
-  "author": "diegoRamirez",
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "express-handlebars": "^6.0.6",
-    "firebase-admin": "^11.3.0",
     "moment": "^2.29.4",
     "mongoose": "^6.8.0",
     "pug": "^3.0.2",

@@ -10,7 +10,7 @@ admin.initializeApp({
 export class Contenedor {
   constructor(db, query ) {
     this.db= admin.firestore();
-    this.query = db.collections('ecommerce')
+    this.query = db.collection('ecommerce')
   }
 
   async save(objeto) {

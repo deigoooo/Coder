@@ -1,10 +1,13 @@
 //Ruta de Productos************
 import express from 'express';
-//import { Contenedor } from '../contenedor/contenedorFs.js';
-import ContenedorProductos from '../dao/productos/productosDaoMongo.js';
+
 const rutaProducto = express.Router();
 
-const productos = new ContenedorProductos();
+//import ContenedorProductos from '../dao/productos/productosDaoMongo.js';
+//import { Contenedor } from '../contenedor/contenedorFs.js';
+import { productos } from '../dao/index.js';
+
+//const productos = new ContenedorProductos();
 
 //middleware
 const privilegio = (peticion,respuesta,next) => {
