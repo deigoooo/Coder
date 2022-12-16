@@ -22,7 +22,7 @@ rutaProducto.get('/', async (peticion, respuesta) => {
 });
 
 rutaProducto.get('/:id', async(peticion, respuesta) => {
-  const id = parseInt(peticion.params.id);
+  const id = peticion.params.id;
   const productoId = await productos.getById(id);
   respuesta.json(productoId);
 });
@@ -30,15 +30,19 @@ rutaProducto.get('/:id', async(peticion, respuesta) => {
 rutaProducto.post('/', privilegio, async (peticion, respuesta) => {
   const nuevoProducto = peticion.body;
   await productos.save(nuevoProducto);
-  respuesta.status(200).json(nuevoProducto);
+  respuesta.json(200).json({
+    status: 'Producto agregado'
+  });
 });
 
 rutaProducto.put('/:id',  privilegio, async (peticion, respuesta) => {
-  const id = parseInt(peticion.params.id);
+  const id = peticion.params.id;
   const nuevoProducto = peticion.body;
-  nuevoProducto._id=id;
-  await productos.update(nuevoProducto);
-  respuesta.status(200).json(nuevoProducto);
+  
+  await productos.update(nuevoProducto,id);
+  respuesta.status(200).json({
+    status: 'Producto modidicado'
+  });
 });
 
 rutaProducto.delete('/:id',  privilegio, async (peticion, respuesta) => {

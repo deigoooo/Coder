@@ -12,7 +12,7 @@ rutaCarrito.get('/', async (peticion, respuesta) => {
 });
 
 rutaCarrito.get('/:id/productos', async (peticion, respuesta) => {
-  const id = parseInt(peticion.params.id);
+  const id = peticion.params.id;
   const listaProductos = await carritos.getById(id);
   respuesta.json(listaProductos.productos);
 });
@@ -47,8 +47,8 @@ rutaCarrito.post('/:id/productos', async (peticion, respuesta) => {
 });
 
 rutaCarrito.delete('/:id/productos/:id_prod', async (peticion, respuesta) => {
-  const idCarrito = parseInt(peticion.params.id);
-  const idProducto = parseInt(peticion.params.id_prod);
+  const idCarrito = peticion.params.id;
+  const idProducto = peticion.params.id_prod;
   const carrito = await carritos.getById(idCarrito);
   let indexToDelete = -1;
   carrito.productos.forEach((producto,index) => {
@@ -66,7 +66,7 @@ rutaCarrito.delete('/:id/productos/:id_prod', async (peticion, respuesta) => {
 });
 
 rutaCarrito.delete('/:id', async (peticion, respuesta) => {
-  const id = parseInt(peticion.params.id);
+  const id = peticion.params.id;
   await carritos.deleteById(id);
   respuesta.json({
     status: 'carrito eliminado'

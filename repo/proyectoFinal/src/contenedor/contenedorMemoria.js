@@ -13,7 +13,7 @@ export class Contenedor {
     let id = 1;
     this.productos.forEach((element, index) => {
       if (element.id >= id) {
-        id = element.id + 1;
+        id = parseInt(element.id) + 1;
       }
     });
     objeto.id = id;
