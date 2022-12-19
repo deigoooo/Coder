@@ -28,12 +28,14 @@ rutaProducto.get('/:id', async(peticion, respuesta) => {
 });
 
 rutaProducto.post('/', privilegio, async (peticion, respuesta) => {
-  const nuevoProducto = peticion.body;
-  await productos.save(nuevoProducto);
-  respuesta.json(200).json({
-    status: 'Producto agregado'
+  const nuevoProducto = peticion.body;  
+  await productos.save(nuevoProducto);  
+  respuesta.status(200).json({
+
+  status: 'Producto agregado'
+  
+    });  
   });
-});
 
 rutaProducto.put('/:id',  privilegio, async (peticion, respuesta) => {
   const id = peticion.params.id;
