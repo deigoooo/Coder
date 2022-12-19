@@ -28,11 +28,16 @@ export class Contenedor {
       });
       return producto;
     }
-  
-    async update(producto,id) {
-      //let objViejo = await this.getById(id);
-      //console.log(objViejo);
-      await this.query.doc(id).update(producto);
+
+    async getByIdCarritos(id) {
+      let productos = await this.getAllCarritos();
+      let producto = null;
+      productos.forEach( (element) => {
+        if( element.id === id ){
+          producto = element;
+        };
+      });
+      return producto;
     }
   
     async getAll() {
@@ -55,6 +60,28 @@ export class Contenedor {
                       });
       });
       return otroArray;
+    }
+
+    async getAllCarritos() {
+      let productos = await this.query.get();
+      let nuevoArray = [];
+      let otroArray = [];
+      productos.forEach((producto)=>{        
+        nuevoArray.push({id:producto.id, ...producto.data()});        
+      });
+      nuevoArray.forEach((element) => {
+        otroArray.push({
+                        timestamp: element.objeto.timestamp,
+                        productos: element.objeto.productos,
+                        id: element.id
+                      });
+      });
+      return otroArray;
+    }
+
+    
+    async update(producto,id) {
+      await this.query.doc(id).update(producto);
     }
   
     async deleteById(id) {
