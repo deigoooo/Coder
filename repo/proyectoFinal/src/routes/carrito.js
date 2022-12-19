@@ -33,12 +33,12 @@ rutaCarrito.post('/:id/productos', async (peticion, respuesta) => {
   const carrito = await carritos.getById(idCarrito);
   const producto = await productos.getById(idProducto);
 
-  console.log(carrito);
-  console.log(producto);
+  //console.log(carrito);
+  //console.log(producto);
   
   await carrito.productos.push(producto);
 
-  console.log(carrito);
+  //console.log(carrito);
   
   await carritos.update(carrito);
   respuesta.json({
