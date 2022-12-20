@@ -4,16 +4,16 @@ class ContenedorMemoria {
         this.elementos = []
     }
 
-    listar(id) {
+    getById(id) {
         const elem = this.elementos.find(elem => elem.id == id)
         return elem || { error: `elemento no encontrado` }
     }
 
-    listarAll() {
+    getAll() {
         return [...this.elementos]
     }
 
-    guardar(elem) {
+    save(elem) {
 
         let newId
         if (this.elementos.length == 0) {
@@ -27,7 +27,7 @@ class ContenedorMemoria {
         return newElem
     }
 
-    actualizar(elem, id) {
+    update(elem, id) {
         const newElem = { id: Number(id), ...elem }
         const index = this.elementos.findIndex(p => p.id == id)
         if (index == -1) {
@@ -38,7 +38,7 @@ class ContenedorMemoria {
         }
     }
 
-    borrar(id) {
+    deleteById(id) {
         const index = this.elementos.findIndex(elem => elem.id == id)
         if (index == -1) {
             return { error: `elemento no encontrado` }
@@ -47,7 +47,7 @@ class ContenedorMemoria {
         }
     }
 
-    borrarAll() {
+    deleteAll() {
         this.elementos = []
     }
 }

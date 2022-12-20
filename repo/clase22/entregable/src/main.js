@@ -2,10 +2,10 @@ import express from 'express'
 import faker from 'faker'
 faker.locale = 'es';
 
+import { productosApi, mensajesApi } from './index.js';
+
 import { Server as HttpServer } from 'http'
 import { Server as Socket } from 'socket.io'
-
-import ContenedorMemoria from './contenedores/ContenedorMemoria.js'
 
 import config from './config.js'
 
@@ -16,9 +16,6 @@ const app = express()
 const httpServer = new HttpServer(app)
 const io = new Socket(httpServer)
 
-const productosApi = new ContenedorMemoria()
-const mensajesApi = new ContenedorMemoria()
-
 //--------------------------------------------
 // configuro el socket
 
@@ -26,22 +23,22 @@ io.on('connection', async socket => {
     console.log('Nuevo cliente conectado!');
 
     // carga inicial de productos
-    socket.emit('productos', await productosApi.listarAll());
+    socket.emit('productos', await productosApi.getAll());
 
     // actualizacion de productos
     socket.on('update', async producto => {
-        await productosApi.guardar(producto)
-        io.sockets.emit('productos', await productosApi.listarAll());
+        await productosApi.save(producto)
+        io.sockets.emit('productos', await productosApi.getAll());
     })
 
     // carga inicial de mensajes
-    socket.emit('mensajes', await mensajesApi.listarAll());
+    socket.emit('mensajes', await mensajesApi.getAll());
 
     // actualizacion de mensajes
     socket.on('nuevoMensaje', async mensaje => {
         mensaje.fyh = new Date().toLocaleString()
-        await mensajesApi.guardar(mensaje)
-        io.sockets.emit('mensajes', await mensajesApi.listarAll());
+        await mensajesApi.save(mensaje)
+        io.sockets.emit('mensajes', await mensajesApi.getAll());
     })
 });
 
