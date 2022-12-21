@@ -7,7 +7,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount.firebase)
 });
 
-export class Contenedor {
+export class ContenedorFirebase {
   constructor( nombreColeccion ) {
     const db = admin.firestore();
     this.query = db.collection(nombreColeccion);
@@ -30,7 +30,7 @@ export class Contenedor {
     }
 
     async getByIdCarritos(id) {
-      let productos = await this.getAllCarritos();
+      let productos = await this.getAllMensajes();
       let producto = null;
       productos.forEach( (element) => {
         if( element.id === id ){
@@ -49,20 +49,16 @@ export class Contenedor {
       });
       nuevoArray.forEach((element) => {
         otroArray.push({
-                        nombre: element.objeto.nombre,
-                        descripcion: element.objeto.descripcion,
-                        timestamp: element.objeto.timestamp,
-                        codigo: element.objeto.codigo,
-                        precio: element.objeto.precio,
-                        stock: element.objeto.stock,
-                        foto: element.objeto.foto,
+                        title: element.objeto.title,
+                        price: element.objeto.price,
+                        thumbnail: element.objeto.thumbnail,
                         id: element.id
                       });
       });
       return otroArray;
     }
 
-    async getAllCarritos() {
+    async getAllMensajes() {
       let productos = await this.query.get();
       let nuevoArray = [];
       let otroArray = [];
@@ -71,8 +67,9 @@ export class Contenedor {
       });
       nuevoArray.forEach((element) => {
         otroArray.push({
-                        timestamp: element.objeto.timestamp,
-                        productos: element.objeto.productos,
+                        autor: element.objeto.autor,
+                        texto: element.objeto.texto,
+                        fyh: element.objeto.fyh,
                         id: element.id
                       });
       });
@@ -98,3 +95,4 @@ export class Contenedor {
     }
   }
 
+  export default ContenedorFirebase

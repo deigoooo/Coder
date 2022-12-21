@@ -11,19 +11,20 @@ switch (process.env.DB) {
   
   case 'mongodb':
   
-    const { default: Contenedor } = await import('./contenedores/contenedorMongo.js');
+    const { default: ContenedorMongo } = await import('./contenedores/contenedorMongo.js');
 
-    productosApi = new Contenedor(
+    productosApi = new ContenedorMongo(
                   'productos', {
-                    autor: { type: String, require: true },
-                    texto: { type: String, require: true },
-                    fyh: { type: String, require: true }
+                    title: { type: String, require: true },
+                    price: { type: String, require: true },
+                    thumbnail: { type: String, require: true }
                   });
                   
-    mensajesApi = new Contenedor(
+    mensajesApi = new ContenedorMongo(
                   'mensajes', {
                     autor: { type: {}, require: true },
                     texto: { type: String, require: true },
+                    fyh: { type: String }
                   });
 
     console.log('estamos en mongodb');
@@ -40,14 +41,13 @@ switch (process.env.DB) {
   break;
 
   case 'firebase':
-      /*
-      const { default: ProductosDaoFirebase } = await import('./productos/productosDaoFirebase.js');
-      const { default: CarritosDaoFirebase } = await import('./carritos/carritosDaoFirebase.js');
-  
-      productos = new ProductosDaoFirebase();
-      carritos = new CarritosDaoFirebase();
-      */
-      console.log('estamos en firebase');
+      
+    const { default: ContenedorFirebase } = await import('./contenedores/ContenedorFirebase.js');     
+
+    productosApi = new ContenedorFirebase('productos');
+    mensajesApi = new ContenedorFirebase('mensajes');
+
+    console.log('estamos en firebase');
   break;
 
   default:

@@ -7,6 +7,8 @@ import { productosApi, mensajesApi } from './index.js';
 import { Server as HttpServer } from 'http'
 import { Server as Socket } from 'socket.io'
 
+import { normalize, schema } from 'normalizr';
+
 import config from './config.js'
 
 //--------------------------------------------
@@ -32,15 +34,44 @@ io.on('connection', async socket => {
     })
 
     // carga inicial de mensajes
-    socket.emit('mensajes', await mensajesApi.getAll());
+    socket.emit('mensajes', await obtenerMensajesNormalizados());
 
     // actualizacion de mensajes
     socket.on('nuevoMensaje', async mensaje => {
         mensaje.fyh = new Date().toLocaleString()
         await mensajesApi.save(mensaje)
-        io.sockets.emit('mensajes', await mensajesApi.getAll());
+        io.sockets.emit('mensajes', await obtenerMensajesNormalizados());
     })
 });
+
+//--------------------------------------------
+// Definicion de esquemas
+
+const autorSchema = new schema.Entity('autor', {}, { idAttribute: 'email' });
+
+const mensajeSchema = new schema.Entity('post', {
+    autor: autorSchema
+}, { idAttribute: 'id' });
+
+const mensajesSchema = new schema.Entity('posts', {
+    mensajes: [mensajeSchema]
+}, { idAttribute: 'id' });
+
+//--------------------------------------------
+// Funcion normalizadora
+
+const obtenerMensajesNormalizados = async () => {
+
+    //const arregloMensajes = await mensajesApi.getAllMensajes();
+    const arregloMensajes = await mensajesApi.getAll(); //usar con mongo
+
+    //console.log(arregloMensajes);
+
+    return normalize({
+        id: 'mensajes',
+        mensajes: arregloMensajes,
+    }, mensajesSchema);
+};
 
 //--------------------------------------------
 // agrego middlewares
@@ -57,9 +88,9 @@ app.get('/api/productos-test', (req, res) => {
     for (let index = 0; index < 5; index++) {
         productosAleatorios.push({
             id: index + 1,
-            autor: faker.name.firstName(),
-            texto: faker.lorem.lines(1),
-            fyh: faker.date.between('2020-01-01T00:00:00.000Z', '2030-01-01T00:00:00.000Z')
+            title: faker.commerce.product(),
+            price: faker.commerce.price(100, 1000, 0),
+            thumbnail: faker.image.imageUrl()
         });
     }
     res.json(productosAleatorios);

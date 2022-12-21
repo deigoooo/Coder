@@ -4,7 +4,7 @@ import config from '../config.js';
 await mongoose.set('strictQuery', true);
 await mongoose.connect(config.mongodb.url);
 
-export class Contenedor {
+export class ContenedorMongo {
   constructor(nombreColeccion, esquema) {
     this.coleccion = mongoose.model(nombreColeccion, esquema);
   }
@@ -31,7 +31,7 @@ export class Contenedor {
   }
 
   async update(producto) {
-    //console.log(producto._id);
+
     await this.coleccion.updateOne({'_id': producto._id}, { $set: { ...producto } });
 
   }
@@ -39,8 +39,12 @@ export class Contenedor {
   async getAll() {
 
     let docs = await this.coleccion.find({});
-    docs = docs.map((item) => {
-      item.id = item._id;
+      //console.log(docs);
+      docs = docs.map((item) => {
+        
+        item._id = item.id;
+        console.log(`aca ${item}`);
+
       return item;
     });
     
@@ -61,4 +65,4 @@ export class Contenedor {
   }
 }
 
-export default Contenedor
+export default ContenedorMongo
