@@ -62,8 +62,8 @@ const mensajesSchema = new schema.Entity('posts', {
 
 const obtenerMensajesNormalizados = async () => {
 
-    //const arregloMensajes = await mensajesApi.getAllMensajes();
-    const arregloMensajes = await mensajesApi.getAll(); //usar con mongo
+    //const arregloMensajes = await mensajesApi.getAllMensajes(); //usar con firebase
+    const arregloMensajes = await mensajesApi.getAll(); //usar con mongo o fs
 
     //console.log(arregloMensajes);
 

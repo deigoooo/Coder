@@ -39,13 +39,19 @@ export class ContenedorMongo {
   async getAll() {
 
     let docs = await this.coleccion.find({});
-      //console.log(docs);
-      docs = docs.map((item) => {
-        
-        item._id = item.id;
-        console.log(`aca ${item}`);
 
-      return item;
+      docs = docs.map((item) => {
+
+        let obj = {
+                  autor: item.autor,
+                  texto: item.texto,
+                  fyh: item.fyh,
+                  id: item._id
+                  }
+      
+      item._id = item.id;
+
+      return obj;
     });
     
     return docs;

@@ -92,7 +92,9 @@ socket.on('mensajes', mensajes => {
 })
 
 function makeHtmlList(mensajes) {
+    
     return mensajes.map(mensaje => {
+        console.log(mensaje);
         return (`
             <div>
                 <b style="color:blue;">${mensaje.autor.email}</b>
