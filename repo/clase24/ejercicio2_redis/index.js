@@ -7,9 +7,9 @@ const RedisStore =  require("connect-redis")(session);
 
 //Configuramos redis
 const redis = require("redis");
-const client = redis.createClient(15834,'redis-15834.c232.us-east-1-2.ec2.cloud.redislabs.com');
+const client = redis.createClient(17036,'redis-17036.c266.us-east-1-3.ec2.cloud.redislabs.com');
 
-client.auth('gGun7DgpqsejadBh7F7aAnzGJm3OPiEr', (err) => {
+client.auth('aKpIbugs4sKZ6nrdQnUaizR9b3YywYtg', (err) => {
   if (err) {console.log('err')}
 });
 

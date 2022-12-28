@@ -1,5 +1,8 @@
 import express from 'express'
 
+import session from 'express-session';
+import MongoStore from 'connect-mongo'
+
 import config from './config.js'
 
 import { Server as HttpServer } from 'http'
@@ -12,14 +15,26 @@ import productosApiRouter from './routers/api/productos.js'
 import addProductosHandlers from './routers/ws/productos.js'
 import addMensajesHandlers from './routers/ws/mensajes.js'
 
-//TO DO: Importar el session-mongo
-//Configurar el session
+const app = express()
 
+//Configurar el session
+const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+
+app.use(session({
+    store: MongoStore.create({
+      mongoUrl: 'mongodb+srv://root:d1i9e8g8o@prueba.26ov04v.mongodb.net/sesiones?retryWrites=true&w=majority',
+      mongoOptions: advancedOptions,
+      ttl: 600
+    }),
+    secret: 'cualquier_cosa',
+    resave: false,
+    saveUninitialized: false
+  }));
 
 //--------------------------------------------
 // instancio servidor, socket y api
 
-const app = express()
+
 const httpServer = new HttpServer(app)
 const io = new Socket(httpServer)
 

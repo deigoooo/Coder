@@ -2,10 +2,10 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
-//Configuramos redis store
+//Configuramos Mongo
 const MongoStore =  require("connect-mongo");
 
-//Configuramos redis
+//Configuramos Mongo
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 
 const app = express();
@@ -13,7 +13,7 @@ const app = express();
 app.use(cookieParser());
 app.use(session({
   store: MongoStore.create({
-    mongoUrl: 'mongodb+srv://root:root@cluster0.7yey2qr.mongodb.net/sesiones?retryWrites=true&w=majority',
+    mongoUrl: 'mongodb+srv://root:d1i9e8g8o@prueba.26ov04v.mongodb.net/sesiones?retryWrites=true&w=majority',
     mongoOptions: advancedOptions,
     ttl: 600
   }),
