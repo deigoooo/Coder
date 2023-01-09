@@ -66,6 +66,7 @@ app.post('/login', (req, res) => {
   req.session.nombre = username;
   req.session.direccion = usuario.direccion;
   req.session.contador = 0;
+
   //redireccionar a la pagina principal
   res.redirect('/datos');
 });
