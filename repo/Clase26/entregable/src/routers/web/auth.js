@@ -12,6 +12,7 @@ passport.use('register', new Strategy({
   }, (req, username, password, done) => {
 
     //Traer el modelo de mongoose de usuario
+    
     //Encriptar contraseña con bcrypt
     //Si el usuario no existe guardar el usuario en la bd de mongo
 
