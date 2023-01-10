@@ -11,8 +11,8 @@ const PORT = 8080;
 
 //Credenciales
 
-const FACEBOOK_CLIENT_ID = '3473973992926019';
-const FACEBOOK_CLIENT_SECRET = '235cfaf6532e183a0f2f36bef29fff0e';
+const FACEBOOK_CLIENT_ID = '503145088605620';
+const FACEBOOK_CLIENT_SECRET = '96c0398d2bf4d2f001fb6aa5d1d54f76';
 
 //Configurar funciones passport
 
