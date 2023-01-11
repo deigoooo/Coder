@@ -2,58 +2,95 @@ import passport from 'passport';
 
 import { Router } from 'express'
 
+import bCrypt from 'bcrypt';
+import { modeloUsuario } from '../../models/usuario.js';
+import session from 'express-session'
+
 import path from 'path'
 import { Strategy } from 'passport-local';
+import { config } from 'process';
 
-const usuarios = [];
+//funcion para encriptar password
+
+const createHash = (password) => {
+    return bCrypt.hashSync(password, bCrypt.genSaltSync(10));
+};
+
+const isValidPassword = (password, usuario) => {
+    return bCrypt.compareSync(password, usuario.password);
+};
 
 passport.use('register', new Strategy({
     passReqToCallback: true
   }, (req, username, password, done) => {
 
-    //Traer el modelo de mongoose de usuario
-    
-    //Encriptar contraseña con bcrypt
-    //Si el usuario no existe guardar el usuario en la bd de mongo
+    modeloUsuario.findOne({'username': username}, (err, usuario)=>{
+        if (err) {
+            return done(err,false);
+        }
 
-    const {direccion} = req.body;
-  
-    const usuario = usuarios.find((usuario) => usuario.username == username);
-    if (usuario) {
-      return done(null, false);
-    }
-    const user = { username, password, direccion };
-    usuarios.push(user);
-    return done(null, user);
-  } ));
+        if (usuario){
+            return done(err,false);
+        }
+
+        const nuevoUsuario = {
+            username: username,
+            password: createHash(password),
+            email: username,
+        }
+
+        modeloUsuario.create(nuevoUsuario, (err, usuarioCreado)=>{
+            if (err){
+                return done(err,false);
+            }
+            console.log('usuario registrado');
+            return done(null,usuarioCreado);
+        })
+    })
+  })
+);
   
 passport.use('login', new Strategy((username, password, done) => {
 
-    //Traer el modelo de usuairo de mongoose
-    //Hacer el find del documento en la coleccion de usuarios (en base a nombre)
+    modeloUsuario.findOne({ username: username}, (err,usuario)=> {
+        if (err){
+            return done(null,false);
+        }
 
-    const usuario = usuarios.find((usuario) => usuario.username == username && usuario.password == password);
-    if (!usuario) {
-        return done(null, false);
-    }
+        if(!usuario){
+            return done(null,false);
+        };
 
-    //Comparar contraseñas con el bcrypt
+        if (!isValidPassword(password, usuario)){
+            return done(null,false);
+        }
 
-    usuario.contador = 0;
-    //redireccionar a la pagina principal
-    return done(null, usuario);
+        console.log('Login realizado con exito');
+        return done(null, usuario);
+    });
+
 }));
 
+
 passport.serializeUser((user, done) => {
-done(null, user.username);
+    done(null, user._id);
 });
 
-passport.deserializeUser((username, done) => {
-const usuario = usuarios.find(usuario => usuario.username == username);
-done(null, usuario);
+passport.deserializeUser((_id, done) => {
+    modeloUsuario.findById(_id, done);
 });
 
 const authWebRouter = new Router()
+
+authWebRouter.use(session({
+    secret: 'misecreto123',
+    cooki: {
+        maxAge: 600000
+    },
+    resave: false,
+    saveUninitialized: false,
+    rolling: true,
+}));
 
 authWebRouter.use(passport.initialize());
 authWebRouter.use(passport.session());
